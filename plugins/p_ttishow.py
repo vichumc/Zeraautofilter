@@ -45,7 +45,7 @@ async def save_group(bot, message):
                     InlineKeyboardButton('📝 Request Group 📝', url=GRP_LNK),
                     InlineKeyboardButton('✔ Main Channel ✔', url=CHNL_LNK)
                  ],[
-                    InlineKeyboardButton("😎 Bot Onwer 😎", url="t.me/KingVJ01")
+                    InlineKeyboardButton("😎 Bot Onwer 😎", url="t.me/Tgxkiller")
                   ]]
         reply_markup=InlineKeyboardMarkup(buttons)
         await message.reply_text(

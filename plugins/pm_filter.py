@@ -2954,6 +2954,18 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
         await asyncio.sleep(30)
         await k.delete()
         return
+    movielist = []
+    if not movies:
+        reqst_gle = mv_rqst.replace(" ", "+")
+        button = [[
+            InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
+        ]]
+        if NO_RESULTS_MSG:
+            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
+        k = await reply_msg.edit_text(text=script.I_CUDNT.format(mv_rqst), reply_markup=InlineKeyboardMarkup(button))
+        await asyncio.sleep(30)
+        await k.delete()
+        return
     movielist += [movie.get('title') for movie in movies]
     movielist += [f"{movie.get('title')} {movie.get('year')}" for movie in movies]
     SPELL_CHECK[mv_id] = movielist
@@ -2977,7 +2989,7 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
         if NO_RESULTS_MSG:
             await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
         k = await reply_msg.edit_text(text=script.I_CUDNT.format(mv_rqst), reply_markup=InlineKeyboardMarkup(button))
-        await asyncio.sleep(10)
+        await asyncio.sleep(30)
         await k.delete()
         return
     else:
@@ -2997,14 +3009,14 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
         )
         try:
             if settings['auto_delete']:
-                await asyncio.sleep(10)
+                await asyncio.sleep(600)
                 await spell_check_del.delete()
         except KeyError:
             grpid = await active_connection(str(msg.from_user.id))
             await save_group_settings(grpid, 'auto_delete', True)
             settings = await get_settings(msg.chat.id)
             if settings['auto_delete']:
-                await asyncio.sleep(10)
+                await asyncio.sleep(600)
                 await spell_check_del.delete()
 
 async def manual_filters(client, message, text=False):
@@ -3034,7 +3046,7 @@ async def manual_filters(client, message, text=False):
                             )
                             try:
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search)
                                     try:
@@ -3079,7 +3091,7 @@ async def manual_filters(client, message, text=False):
                             )
                             try:
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search)
                                     try:
@@ -3108,7 +3120,7 @@ async def manual_filters(client, message, text=False):
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search)
                     elif btn == "[]":
@@ -3121,7 +3133,7 @@ async def manual_filters(client, message, text=False):
                         )
                         try:
                             if settings['auto_ffilter']:
-                                ai_search = False
+                                ai_search = True
                                 reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                 await auto_filter(client, message.text, message, reply_msg, ai_search)
                                 try:
@@ -3150,7 +3162,7 @@ async def manual_filters(client, message, text=False):
                             await save_group_settings(grpid, 'auto_ffilter', True)
                             settings = await get_settings(message.chat.id)
                             if settings['auto_ffilter']:
-                                ai_search = False
+                                ai_search = True
                                 reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                 await auto_filter(client, message.text, message, reply_msg, ai_search)
                     else:
@@ -3163,7 +3175,7 @@ async def manual_filters(client, message, text=False):
                         )
                         try:
                             if settings['auto_ffilter']:
-                                ai_search = False
+                                ai_search = True
                                 reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                 await auto_filter(client, message.text, message, reply_msg, ai_search)
                                 try:
@@ -3192,7 +3204,7 @@ async def manual_filters(client, message, text=False):
                             await save_group_settings(grpid, 'auto_ffilter', True)
                             settings = await get_settings(message.chat.id)
                             if settings['auto_ffilter']:
-                                ai_search = False
+                                ai_search = True
                                 reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                 await auto_filter(client, message.text, message, reply_msg, ai_search)
 
@@ -3231,7 +3243,7 @@ async def global_filters(client, message, text=False):
                                 settings = await get_settings(message.chat.id)
                                 try:
                                     if settings['auto_ffilter']:
-                                        ai_search = False
+                                        ai_search = True
                                         reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                         await auto_filter(client, message.text, message, reply_msg, ai_search)
                                         try:
@@ -3260,7 +3272,7 @@ async def global_filters(client, message, text=False):
                                     await save_group_settings(grpid, 'auto_ffilter', True)
                                     settings = await get_settings(message.chat.id)
                                     if settings['auto_ffilter']:
-                                        ai_search = False
+                                        ai_search = True
                                         reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                         await auto_filter(client, message.text, message, reply_msg, ai_search) 
                             else:
@@ -3288,7 +3300,7 @@ async def global_filters(client, message, text=False):
                                 settings = await get_settings(message.chat.id)
                                 try:
                                     if settings['auto_ffilter']:
-                                        ai_search = False
+                                        ai_search = True
                                         reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                         await auto_filter(client, message.text, message, reply_msg, ai_search)
                                         try:
@@ -3317,7 +3329,7 @@ async def global_filters(client, message, text=False):
                                     await save_group_settings(grpid, 'auto_ffilter', True)
                                     settings = await get_settings(message.chat.id)
                                     if settings['auto_ffilter']:
-                                        ai_search = False
+                                        ai_search = True
                                         reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                         await auto_filter(client, message.text, message, reply_msg, ai_search)
                             else:
@@ -3343,7 +3355,7 @@ async def global_filters(client, message, text=False):
                             settings = await get_settings(message.chat.id)
                             try:
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search)
                                     try:
@@ -3372,7 +3384,7 @@ async def global_filters(client, message, text=False):
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search) 
                         else:
@@ -3428,7 +3440,7 @@ async def global_filters(client, message, text=False):
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
                                 if settings['auto_ffilter']:
-                                    ai_search = False
+                                    ai_search = True
                                     reply_msg = await message.reply_text(f"<b><i>Searching For {message.text} 🔍</i></b>")
                                     await auto_filter(client, message.text, message, reply_msg, ai_search)
                         else:

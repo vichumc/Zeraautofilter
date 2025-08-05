@@ -166,3 +166,20 @@ LOG_STR += f"Your current IMDB template is {IMDB_TEMPLATE}"
 # Don't Remove Credit @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot @Tech_VJ
 # Ask Doubt on telegram @KingVJ01
+
+# ======================== CUSTOM FILE CAPTION FUNCTION ========================
+
+def generate_caption(filename: str, filesize: int, language: str = "Malayalam") -> str:
+    def humanbytes(size):
+        if not size:
+            return ""
+        power = 2**10
+        n = 0
+        power_labels = {0: 'B', 1: 'KB', 2: 'MB', 3: 'GB', 4: 'TB'}
+        while size > power:
+            size /= power
+            n += 1
+        return f"{round(size, 2)} {power_labels[n]}"
+    
+    shortname = filename.rsplit('.', 1)[0]
+    return f"🎬 Name: {shortname}\n💾 Size: {humanbytes(filesize)}\n🌐 Languages: {language}"
